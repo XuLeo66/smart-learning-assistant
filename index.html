@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>智慧学习助手</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div id="propCounter" class="prop-counter" aria-label="免打卡道具计数">
+          <span class="prop-icon"></span>
+          <span class="prop-multiply">×</span>
+          <span id="propCount">0</span>
+        </div>
+
+        <div class="app-title">智慧学习助手</div>
+        <div class="bell-icon" aria-label="通知">🔔</div>
+      </header>
+
+      <main id="homeView" class="view active">
+        <div class="hero-cards">
+          <button class="feature-card primary" data-target="planView">
+            <div class="card-icon">🧠</div>
+            <div class="card-text">
+              <h3>英语学习</h3>
+              <p>进入学习英语单词</p>
+            </div>
+            <span class="card-arrow">→</span>
+          </button>
+
+          <button class="feature-card" data-target="weeklyPlanView">
+            <div class="card-icon">📘</div>
+            <div class="card-text">
+              <h3>学习计划</h3>
+              <p>制定你的英语背单词计划</p>
+            </div>
+            <span class="card-arrow">→</span>
+          </button>
+
+          <button class="feature-card" data-target="progressView">
+            <div class="card-icon">📈</div>
+            <div class="card-text">
+              <h3>学习进度</h3>
+              <p>查看本周掌握情况</p>
+            </div>
+            <span class="card-arrow">→</span>
+          </button>
+
+          <button class="feature-card" data-target="settingsView">
+            <div class="card-icon">⚙️</div>
+            <div class="card-text">
+              <h3>设置与帮助</h3>
+              <p>自定义学习目标和偏好</p>
+            </div>
+            <span class="card-arrow">→</span>
+          </button>
+        </div>
+
+        <div class="progress-panel">
+          <div class="panel-header">
+            <span>本周学习进度</span>
+            <span class="progress-percent">60%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 60%"></div>
+          </div>
+          <div class="progress-meta">已掌握 240 个单词 / 目标 400 个</div>
+        </div>
+      </main>
+
+      <main id="planView" class="view">
+        <div class="sub-header">
+          <button class="icon-button back-btn" data-target="homeView">←</button>
+          <h2>英语</h2>
+          <button class="icon-button menu-btn" aria-label="更多">⋯</button>
+        </div>
+
+        <div class="upload-panel">
+          <div id="dropZone" class="drop-zone" tabindex="0" aria-label="拖拽学习资料到此处">
+            <div class="drop-icon">📤</div>
+            <div class="drop-title">拖拽学习资料到此处</div>
+            <div class="drop-subtitle">或点击选择文件</div>
+            <div class="drop-types">支持格式：PDF · DOCX · TXT · 图片</div>
+            <label class="choose-file-btn" for="fileInput">+ 选择文件</label>
+            <input id="fileInput" type="file" hidden multiple />
+          </div>
+        </div>
+
+        <div class="goal-box">
+          <h3>学习目标设置</h3>
+          <div class="goal-row">
+            <span>目标单词量：</span>
+            <strong>300 个</strong>
+          </div>
+          <div class="goal-row">
+            <span>学习方式：</span>
+            <strong>按词根 + 例句 + 复习</strong>
+          </div>
+          <div class="goal-row">
+            <span>复习策略：</span>
+            <strong>间隔复习</strong>
+          </div>
+        </div>
+
+        <div class="bottom-actions">
+          <button class="secondary-btn back-btn" data-target="homeView">返回</button>
+          <button id="generatePlanBtn" class="primary-btn">生成计划</button>
+        </div>
+      </main>
+
+      <main id="weeklyPlanView" class="view">
+        <div class="sub-header">
+          <button class="icon-button back-btn" data-target="homeView">←</button>
+          <h2>英语</h2>
+          <button class="icon-button menu-btn" aria-label="更多">⋯</button>
+        </div>
+
+        <div class="week-title">本周学习计划（按单词量）</div>
+
+        <div class="week-grid" id="weekGrid" aria-label="本周计划表格">
+          <div class="day-label">周一</div>
+          <div class="day-label">周二</div>
+          <div class="day-label">周三</div>
+          <div class="day-label">周四</div>
+          <div class="day-label">周五</div>
+          <div class="day-label">周六</div>
+          <div class="day-label">周日</div>
+
+          <div class="day-cell" data-day="0"><span></span></div>
+          <div class="day-cell" data-day="1"><span></span></div>
+          <div class="day-cell" data-day="2"><span></span></div>
+          <div class="day-cell" data-day="3"><span></span></div>
+          <div class="day-cell" data-day="4"><span></span></div>
+          <div class="day-cell" data-day="5"><span></span></div>
+          <div class="day-cell" data-day="6"><span></span></div>
+        </div>
+
+        <div class="recommend-box">
+          <h3>💡 智能推荐</h3>
+          <p>周一至周五：每天 50 个新单词</p>
+          <p>周六：复习 150 个单词</p>
+          <p>周日：复习 100 个单词</p>
+          <div class="total-words">总周单词量：400 个</div>
+        </div>
+
+        <div class="plan-actions-row">
+          <button class="secondary-btn back-btn" data-target="planView">返回</button>
+          <button id="autoRecommendBtn" class="secondary-btn outline-btn">使用智能推荐计划</button>
+          <button id="confirmPlanBtn" class="primary-btn">确认计划</button>
+        </div>
+
+        <button id="skipCheckInBtn" class="skip-checkin-btn disabled" type="button">跳过打卡</button>
+      </main>
+
+      <main id="lessonView" class="view">
+        <div class="sub-header">
+          <button class="icon-button back-btn" data-target="weeklyPlanView">←</button>
+          <h2>英语背单词</h2>
+          <button class="icon-button menu-btn" aria-label="更多">⋯</button>
+        </div>
+
+        <div class="lesson-topbar">
+          <div>📍 今日任务：背诵 50 个单词</div>
+          <div>⏳ 当前进度：8 / 50</div>
+        </div>
+
+        <div class="word-card">
+          <div class="word-title">apple</div>
+          <div class="word-pronunciation">🔊 /ˈæpəl/</div>
+          <div class="word-meaning">n. 苹果</div>
+          <div class="word-meta">词根：来自古英语 “æppel”</div>
+          <div class="separator"></div>
+          <div class="example-box">
+            <div class="example-label">📖 例句：</div>
+            <div class="example-text">An apple a day keeps the doctor away.</div>
+          </div>
+        </div>
+
+        <div class="feynman-box">
+          <div class="feynman-label">费曼式复述：</div>
+          <textarea id="feynmanInput" rows="3" placeholder="用你自己的话解释 apple 这个词..."></textarea>
+        </div>
+
+        <div class="answer-row">
+          <button class="danger-btn" type="button">❌ 忘记了</button>
+          <button class="success-btn" type="button">✓ 记住了</button>
+          <button class="secondary-btn warm-btn" type="button">⭐ 重点词</button>
+        </div>
+
+        <div class="next-word">下一个单词：banana ▶</div>
+      </main>
+
+      <main id="progressView" class="view">
+        <div class="sub-header">
+          <button class="icon-button back-btn" data-target="homeView">←</button>
+          <h2>学习进度</h2>
+          <button class="icon-button menu-btn" aria-label="更多">⋯</button>
+        </div>
+
+        <div class="progress-panel large-panel">
+          <div class="panel-header">
+            <span>📊 本周学习统计</span>
+          </div>
+          <div class="stat-line">已掌握：240 / 400 个单词 <span>60%</span></div>
+          <div class="progress-bar small">
+            <div class="progress-fill" style="width: 60%"></div>
+          </div>
+          <div class="mini-kpis">
+            <span>需复习：80 个单词</span>
+            <span>重点词：35 个</span>
+          </div>
+        </div>
+
+        <div class="mistake-box">
+          <h3>易错单词 TOP 5</h3>
+          <ol>
+            <li>accommodate - 错 3 次</li>
+            <li>rhythm - 错 2 次</li>
+            <li>necessary - 错 2 次</li>
+            <li>separate - 错 1 次</li>
+            <li>challenge - 错 1 次</li>
+          </ol>
+        </div>
+      </main>
+
+      <main id="settingsView" class="view">
+        <div class="sub-header">
+          <button class="icon-button back-btn" data-target="homeView">←</button>
+          <h2>设置与帮助</h2>
+          <button class="icon-button menu-btn" aria-label="更多">⋯</button>
+        </div>
+
+        <div class="settings-list">
+          <div class="setting-item">
+            <span>学习目标</span>
+            <strong>300 个单词 / 周</strong>
+          </div>
+          <div class="setting-item">
+            <span>词库偏好</span>
+            <strong>中等难度</strong>
+          </div>
+          <div class="setting-item">
+            <span>复习策略</span>
+            <strong>间隔复习</strong>
+          </div>
+          <div class="setting-item">
+            <span>帮助中心</span>
+            <strong>查看说明</strong>
+          </div>
+        </div>
+      </main>
+
+      <nav class="bottom-nav" aria-label="底部导航">
+        <button class="nav-item active" data-target="homeView">🏠<span>首页</span></button>
+        <button class="nav-item" data-target="lessonView">📚<span>学习</span></button>
+        <button class="nav-item" data-target="progressView">📊<span>进度</span></button>
+        <button class="nav-item" data-target="settingsView">⚙️<span>设置</span></button>
+      </nav>
+    </div>
+
+    <div id="rewardToast" class="reward-toast" aria-live="polite">
+      <div class="reward-toast-inner">
+        <div class="title-line">恭喜你获得一个</div>
+        <div class="title-line">免打卡道具！</div>
+      </div>
+    </div>
+
+    <div id="confirmModal" class="modal hidden" aria-modal="true">
+      <div class="modal-card">
+        <h3>确认使用免打卡道具？</h3>
+        <p>使用后，今日和之后的计划将自动往后推迟一天。</p>
+        <div class="modal-actions">
+          <button class="secondary-btn" id="cancelSkipBtn">取消</button>
+          <button class="primary-btn" id="confirmSkipBtn">确认使用</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <div id="confettiLayer" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+
